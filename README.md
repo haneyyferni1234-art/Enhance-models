@@ -20,7 +20,7 @@ Fused:  [the_first]  +  [time_i_saw]  +  [the_world]                    = 3 toke
 | المقياس | القيمة |
 |---------|--------|
 | ضغط الترميز | 11-17% |
-| تسريع prefill (O(N²)) | 1.46-1.46x |
+| تسريع prefill (O(N²)) | 1.23-1.56x |
 | خسارة البيانات | 0% (Lossless) |
 | أنماط الدمج | 33,303 (20K bigram + 13.3K multigram) |
 | VRAM إضافي | 0.108 GB (d=1536, FP16) |
@@ -90,19 +90,23 @@ Input → Tokenizer → [token IDs] → FusionTrie (greedy longest-match)
                              FusionTrie.expand → decode → Output
 ```
 
-### Flistructure
+### File Structure
 
 ```
-AI-MODEL/
+fusion-model/
 ├── fusion_wrapper.py         ← المكتبة الرئيسية
 ├── mine_patterns.py          ← استخراج الأنماط من الكوربس
+├── lora_finetune.py          ← LoRA fine-tuning
+├── test_fusion.py            ← اختبارات (5 اختبارات)
+├── cross_model_bench.py      ← مقارنة عبر 6 نماذج
 ├── patterns/
-│   ├── bigram_patterns.json  ← 20K bigram (نصي, لأي tokenizer)
+│   ├── bigram_patterns.json  ← 20K bigram (نصي، لأي tokenizer)
 │   └── multigram_patterns.json ← 13K multigram (خاص بـ Qwen tokens)
+├── pyproject.toml            ← pip install
 ├── README.md                 ← هذا الملف
 ├── DOCS.md                   ← توثيق كامل
-├── accepted-001.jsonl        ← الكوربس (562K وثيقة)
-└── accepted-002.txt          ← الكوربس بصيغة نصية
+├── LICENSE                   ← MIT
+└── .gitignore
 ```
 
 ### ملاحظات مهمة
