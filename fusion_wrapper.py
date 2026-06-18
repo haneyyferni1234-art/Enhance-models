@@ -347,7 +347,20 @@ class FusionModelWrapper:
 # 5. FACTORY: from_pretrained
 # ============================================================
 
-DEFAULT_PATTERNS_DIR = __file__.replace("fusion_wrapper.py", "patterns")
+def _resolve_pattern_path(filename):
+    """Search for pattern files in patterns/ subdir, root dir, or alongside this script."""
+    import os
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    candidates = [
+        os.path.join(script_dir, "patterns", filename),
+        os.path.join(script_dir, filename),
+        os.path.join(os.getcwd(), "patterns", filename),
+        os.path.join(os.getcwd(), filename),
+    ]
+    for p in candidates:
+        if os.path.exists(p):
+            return p
+    return candidates[0]  # fall back to patterns/ subdir
 
 def from_pretrained(
     model_name_or_path,
@@ -367,9 +380,9 @@ def from_pretrained(
         (FusionModelWrapper, tokenizer)
     """
     if bigram_path is None:
-        bigram_path = f"{DEFAULT_PATTERNS_DIR}/bigram_patterns.json"
+        bigram_path = _resolve_pattern_path("bigram_patterns.json")
     if multigram_path is None:
-        multigram_path = f"{DEFAULT_PATTERNS_DIR}/multigram_patterns.json"
+        multigram_path = _resolve_pattern_path("multigram_patterns.json")
 
     print("=" * 60)
     print("  FusionModelWrapper — lossless token fusion (prefill-only)")
