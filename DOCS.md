@@ -105,8 +105,8 @@ embeddings[new_tokens] = mean + noise * std
 | Param | Default | Description |
 |-------|---------|-------------|
 | `model_name_or_path` | required | HuggingFace model name or path |
-| `bigram_path` | `./patterns/bigram_patterns.json` | Bigram pattern file |
-| `multigram_path` | `./patterns/multigram_patterns.json` | Multi-gram pattern file |
+| `bigram_path` | `./bigram_patterns.json` | Bigram pattern file |
+| `multigram_path` | `./multigram_patterns.json` | Multi-gram pattern file |
 | `device_map` | `"auto"` | Device placement |
 | `torch_dtype` | `torch.float16` | Model precision |
 
@@ -158,6 +158,9 @@ Load a previously saved fused checkpoint.
 ## Pattern Storage Format
 
 ### `patterns/bigram_patterns.json`
+
+Actually stored at root level in the repo: `bigram_patterns.json`.
+
 ```json
 [
   {"words": ["the", "world"], "frequency": 16228, "id": 0},
@@ -167,6 +170,9 @@ Load a previously saved fused checkpoint.
 ```
 
 ### `patterns/multigram_patterns.json`
+
+Also at root level: `multigram_patterns.json`.
+
 ```json
 [
   {"phrase": [264, 2763, 315], "frequency": 47, "savings": 94, "id": 0},
@@ -178,15 +184,14 @@ Load a previously saved fused checkpoint.
 ## File Structure
 
 ```
-fusion-model/
+Enhance-models/
 ├── fusion_wrapper.py         ← Main library (production-ready)
 ├── mine_patterns.py          ← Pattern miner script
 ├── lora_finetune.py          ← LoRA fine-tuning script
 ├── test_fusion.py            ← Test suite (5 tests)
 ├── cross_model_bench.py      ← Cross-model benchmark (6 families)
-├── patterns/
-│   ├── bigram_patterns.json  ← 20K bigram patterns (text-level)
-│   └── multigram_patterns.json ← 13K multi-gram patterns (Qwen tokens)
+├── bigram_patterns.json      ← 20K bigram patterns (text-level)
+├── multigram_patterns.json   ← 13K multi-gram patterns (Qwen tokens)
 ├── pyproject.toml            ← pip install config
 ├── README.md                 ← Quick start guide
 ├── DOCS.md                   ← This file

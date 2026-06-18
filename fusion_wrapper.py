@@ -485,6 +485,7 @@ if __name__ == "__main__":
     parser.add_argument("--batch", nargs="*", default=[], help="Batch of prompts for batch generation demo")
     parser.add_argument("--bigram-path", default=None, help="Bigram pattern file")
     parser.add_argument("--multigram-path", default=None, help="Multi-gram pattern file")
+    parser.add_argument("--corpus", default=None, help="Corpus path for benchmark (default: ./accepted-001.jsonl)")
     args = parser.parse_args()
 
     kw = {}
@@ -518,7 +519,7 @@ if __name__ == "__main__":
 
     if args.benchmark:
         import time
-        corpus_path = kwargs.pop('corpus', './accepted-001.jsonl')
+        corpus_path = args.corpus if hasattr(args, 'corpus') and args.corpus else './accepted-001.jsonl'
         print(f"\n  Running compression benchmark (100 docs)...")
         texts = []
         with open(corpus_path) as f:

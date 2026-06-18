@@ -93,15 +93,14 @@ Input → Tokenizer → [token IDs] → FusionTrie (greedy longest-match)
 ### File Structure
 
 ```
-fusion-model/
+Enhance-models/
 ├── fusion_wrapper.py         ← المكتبة الرئيسية
 ├── mine_patterns.py          ← استخراج الأنماط من الكوربس
 ├── lora_finetune.py          ← LoRA fine-tuning
 ├── test_fusion.py            ← اختبارات (5 اختبارات)
 ├── cross_model_bench.py      ← مقارنة عبر 6 نماذج
-├── patterns/
-│   ├── bigram_patterns.json  ← 20K bigram (نصي، لأي tokenizer)
-│   └── multigram_patterns.json ← 13K multigram (خاص بـ Qwen tokens)
+├── bigram_patterns.json      ← 20K bigram (نصي، لأي tokenizer)
+├── multigram_patterns.json   ← 13K multigram (خاص بـ Qwen tokens)
 ├── pyproject.toml            ← pip install
 ├── README.md                 ← هذا الملف
 ├── DOCS.md                   ← توثيق كامل
