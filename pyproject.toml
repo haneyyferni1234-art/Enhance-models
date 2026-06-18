@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "fusion-model-wrapper"
+version = "0.1.0"
+description = "Lossless token fusion middleware for LLM inference acceleration"
+readme = "README.md"
+license = {file = "LICENSE"}
+requires-python = ">=3.10"
+dependencies = [
+    "torch>=2.0",
+    "transformers>=4.40",
+    "accelerate",
+]
+optional-dependencies = {
+    "train": ["peft", "datasets"],
+    "test": ["pytest"],
+}
+
+[project.urls]
+Homepage = "https://github.com/hanialsuwaye/fusion-model"
